@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class YouTrackApiTests {
     final String BASE_URL = "http://193.233.193.42:9091/api";
@@ -68,5 +69,25 @@ public class YouTrackApiTests {
                 .then()
                 .statusCode(200);
     }
+    @Test
+    void addCommentToIssue() {
+        String issueId = "DEMO-22"; // замените на ID своей задачи
 
+        String commentBody = """
+        {
+          "text": "41"
+        }
+        """;
+
+        given()
+                .baseUri(BASE_URL)
+                .header("Authorization", "Bearer " + TOKEN)
+                .header("Content-Type", "application/json")
+                .body(commentBody)
+                .when()
+                .post("/issues/" + issueId + "/comments")
+                .then()
+                .statusCode(200);
+
+    }
 }
